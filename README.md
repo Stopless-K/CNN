@@ -20,7 +20,7 @@
 
 ### train
 ```shell
-$   python3 -h to see args
+$   python3 -h # to see args
 ```
 ```
 Training of CNN
