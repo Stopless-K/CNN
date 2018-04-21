@@ -68,31 +68,31 @@ $   tensorboard --logdir=train_log
 
 ## file tree
 * cnn  
- - train.py # training scripts
- - network.py # network class
-    - class Network
-      -  func_result # function, output the result of net
-      -  func_loss # loss function
-      -  hidden_layer # function, hidden_layer of the net, import from ./model/
-      -  net # network, the network
-      -  train # train function
-    - cfg # config of input & output data, defined in ./commom.py
-    - get\_train # function, get train data from ./data\_provider.py
-    - get\_val # the same
-    - get\_test # the same
- - commom.py # config of image shape and something
- - data\_provider.py # provide data (not complete yet)
- - README.md # me
- - Makefile # some commonds
- - IO.py # read data from dir data/
- - model/ # store basic models or new model   
-   - \_\_init\_\_.py # import model from dir model/, like line #1
-   - demo.py # demo model
- - scripts/ # store some shells
- - data/ # store data
- - train\_log/ # training log (default path)
-   - models/ # store training models
-   - train\_events/ # store tensorboard logs
+    + train.py # training scripts
+    + network.py # network class
+        - class Network
+            -  func_result # function, output the result of net
+            -  func_loss # loss function
+            -  hidden_layer # function, hidden_layer of the net, import from ./model/
+            -  net # network, the network
+            -  train # train function
+        - cfg # config of input & output data, defined in ./commom.py
+        - get\_train # function, get train data from ./data\_provider.py
+        - get\_val # the same
+        - get\_test # the same
+    + commom.py # config of image shape and something
+        - data\_provider.py # provide data (not complete yet)
+    + README.md # me
+    + Makefile # some commonds
+    + IO.py # read data from dir data/
+    + model/ # store basic models or new model   
+        - \_\_init\_\_.py # import model from dir model/, like line #1
+        - demo.py # demo model
+    + scripts/ # store some shells
+    + data/ # store data
+    + train\_log/ # training log (default path)
+    + models/ # store training models
+    + train\_events/ # store tensorboard logs
 
 
- 
+
