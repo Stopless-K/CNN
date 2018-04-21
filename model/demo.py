@@ -16,28 +16,34 @@ def conv_maxpool_layer(x, name, filters, kernel_size, padding='same', \
         return x
 
 def prod(x):
+    #   return production of an array
     return np.array(x).prod()
-
 
 def dense_layer(x, is_training, name='dense_layer', \
         units=1024, activation=tf.nn.relu):
     with tf.name_scope('dense_layer'):
-        x = tf.reshape(x, [-1, prod(x.shape[1:])], name='%s.reshape'%name)   
+        #   reshape tensor from [batch_size, w, h, c] 
+        #   to [batch_size, w*h*c]
+        x = tf.reshape(x, [-1, prod(x.shape[1:])], name='%s.reshape'%name) 
         x = tf.layers.dense(inputs=x, units=units, activation=activation, \
-                name=name)
+                name='%s.fully_connect'%name)
         x = tf.layers.dropout(inputs=x, rate=0.4, \
-                training=is_training,
+                training=is_training,   # only works when training
                 name='%s.dropout'%name)
         return x
 
 def demo_model(x, is_training):
+
     params = [
         {'filters': 32, 'kernel_size': [5, 5]},
         {'filters': 64, 'kernel_size': [5, 5]},
     ]
+    
+    #   two layers with conv & maxpool
     for i in range(len(params)):
         x = conv_maxpool_layer(x, 'layer_%d'%i, **params[i])
     
+    #   flat & fully connect layer & dropout
     x = dense_layer(x, is_training, 'dense_layer')
     return x
 
