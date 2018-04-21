@@ -15,6 +15,19 @@ class Network(object):
         self.placeholder = {}
         self.net()
     # }}}
+    def feed_dict(self, data):# {{{
+        return {self.placeholder[key]: value for key, value in data.items()}
+    # }}}
+    def show_epoch(self, loss, name):# {{{
+        current_time = time() - self.start_time
+        eta = 'forever' if self.args.step == -1 else '%.2f' % \
+                (current_time / self.step * (self.args.step - self.step))
+        print('[%s] #%d: loss=%.4f time=%.2f eta=%s' % \
+                (name, self.step, loss, current_time, eta))
+    # }}}
+
+
+
     def func_result(self, x):# {{{
         with tf.name_scope('prediction'):
             _class = tf.argmax(x, axis=1)
@@ -25,9 +38,6 @@ class Network(object):
         with tf.name_scope('loss'):
             x = tf.nn.softmax(x, axis=1, name='softmax')
             return -tf.reduce_mean(y*tf.log(x) + (1-y)*tf.log(1-x))
-    # }}}
-    def feed_dict(self, data):# {{{
-        return {self.placeholder[key]: value for key, value in data.items()}
     # }}}
     def hidden_layer(self, x, is_training):# {{{
         with tf.name_scope('hidden_layer') as name_scope:
@@ -58,17 +68,13 @@ class Network(object):
         tf.summary.scalar('loss', self.loss_op)
         self.summary = tf.summary.merge_all()
     # }}}
-    def show_epoch(self, loss, name):# {{{
-        current_time = time() - self.start_time
-        eta = 'forever' if self.args.step == -1 else '%.2f' % \
-                (current_time / self.step * (self.args.step - self.step))
-        print('[%s] #%d: loss=%.4f time=%.2f eta=%s' % \
-                (name, self.step, loss, current_time, eta))
-    # }}}
     def train(self):# {{{
         init = tf.global_variables_initializer()
+        saver = tf.train.Saver()
         with tf.Session() as sess:
             sess.run(init)
+            if self.args.checkpoint:
+                saver.restore(sess, self.args.checkpoint)
             merged = tf.summary.merge_all()
             train_writer = tf.summary.FileWriter(\
                     os.path.join(self.args.logdir, 'train'), sess.graph)
@@ -85,7 +91,13 @@ class Network(object):
                 )
                 train_writer.add_summary(train_summary, self.step)
 
-                if self.step == 1 or self.step % self.args.display_step == 0:
+                if self.step % self.args.save_step == 0:
+                    saver.save(sess, '%s_%d.pkl' % \
+                            (os.path.join(self.args.model_path, \
+                            self.args.name), self.step))
+
+                if self.step == 1 or \
+                        self.step % self.args.val_step == 0:
                     self.show_epoch(loss, 'train')
                     val_summary, loss = sess.run(\
                             [self.summary, self.loss_op], \

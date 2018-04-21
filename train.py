@@ -4,11 +4,24 @@ from network import Network
 
 def get_args():# {{{
     parser = argparse.ArgumentParser(description='Training of CNN')
+    parser.add_argument('--name', type=str, default='CNN', \
+            help='name of the task')
     parser.add_argument('-lr', '--learning-rate', type=float, default=1e-5)
-    parser.add_argument('-s', '--step', type=int, default=2000)
-    parser.add_argument('-b', '--batch-size', type=int, default=8)
-    parser.add_argument('--display-step', type=int, default=20)
-    parser.add_argument('--logdir', default='train_log', type=str)
+    parser.add_argument('-s', '--step', type=int, default=-1, \
+            help='total training step, -1 means infinite')
+    parser.add_argument('-b', '--batch-size', type=int, default=256, \
+            help='batch size of each step')
+    parser.add_argument('-c', '--checkpoint', type=str, default=None, \
+            help='path to load pretrained model, default for no loading')
+    parser.add_argument('--val-step', type=int, default=20, \
+            help='how many training steps before each validation')
+    parser.add_argument('--save-step', type=int, default=100,
+            help='how many training steps before each model-saving')
+    parser.add_argument('--model-path', type=str, \
+            default='train_log/models/', help='path to save model')
+    parser.add_argument('--logdir', type=str, \
+            default='train_log/train.events', \
+            help='path to save training logs')
     return parser.parse_args()
 # }}}
 
