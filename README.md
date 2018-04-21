@@ -57,13 +57,13 @@ $   tensorboard --logdir=train_log
 ## file logic
 
 * ./train.py
- * get args
- * load network class from **./network.py**
+ + get args
+ + load network class from **./network.py**
 * ./network.py
- * get input data and ground truth from function **get\_train** & **get\_val** & **get\_test** from **./data\_provider.py**
- * load hidden layer from **./model/\_\_init\_\_.py**
+ + get input data and ground truth from function **get\_train** & **get\_val** & **get\_test** from **./data\_provider.py**
+ + load hidden layer from **./model/\_\_init\_\_.py**
 * ./model/\_\_init\_\_.py
- * load models from **./model/\*.py**
+ + load models from **./model/\*.py**
  
 
 ## file tree
