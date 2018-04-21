@@ -13,9 +13,9 @@ def get_args():# {{{
             help='batch size of each step')
     parser.add_argument('-c', '--checkpoint', type=str, default=None, \
             help='path to load pretrained model, default for no loading')
-    parser.add_argument('--val-step', type=int, default=20, \
+    parser.add_argument('--val-step', type=int, default=10, \
             help='how many training steps before each validation')
-    parser.add_argument('--save-step', type=int, default=100,
+    parser.add_argument('--save-step', type=int, default=1000,
             help='how many training steps before each model-saving')
     parser.add_argument('--model-path', type=str, \
             default='train_log/models/', help='path to save model')
