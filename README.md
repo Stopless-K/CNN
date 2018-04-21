@@ -57,19 +57,19 @@ $   tensorboard --logdir=train_log
 ## file logic
 
 * ./train.py
- + get args
- + load network class from **./network.py**
+ - get args
+ - load network class from **./network.py**
 * ./network.py
- + get input data and ground truth from function **get\_train** & **get\_val** & **get\_test** from **./data\_provider.py**
- + load hidden layer from **./model/\_\_init\_\_.py**
+ - get input data and ground truth from function **get\_train** & **get\_val** & **get\_test** from **./data\_provider.py**
+ - load hidden layer from **./model/\_\_init\_\_.py**
 * ./model/\_\_init\_\_.py
- + load models from **./model/\*.py**
+ - load models from **./model/\*.py**
  
 
 ## file tree
 * cnn  
- + train.py # training scripts
- + network.py # network class
+ - train.py # training scripts
+ - network.py # network class
     - class Network
       -  func_result # function, output the result of net
       -  func_loss # loss function
@@ -80,19 +80,19 @@ $   tensorboard --logdir=train_log
     - get\_train # function, get train data from ./data\_provider.py
     - get\_val # the same
     - get\_test # the same
- + commom.py # config of image shape and something
- + data\_provider.py # provide data (not complete yet)
- + README.md # me
- + Makefile # some commonds
- + IO.py # read data from dir data/
- * model/ # store basic models or new model   
-   + \_\_init\_\_.py # import model from dir model/, like line #1
-   + demo.py # demo model
- * scripts/ # store some shells
- * data/ # store data
- * train\_log/ # training log (default path)
-   + models/ # store training models
-   + train\_events/ # store tensorboard logs
+ - commom.py # config of image shape and something
+ - data\_provider.py # provide data (not complete yet)
+ - README.md # me
+ - Makefile # some commonds
+ - IO.py # read data from dir data/
+ - model/ # store basic models or new model   
+   - \_\_init\_\_.py # import model from dir model/, like line #1
+   - demo.py # demo model
+ - scripts/ # store some shells
+ - data/ # store data
+ - train\_log/ # training log (default path)
+   - models/ # store training models
+   - train\_events/ # store tensorboard logs
 
 
  
