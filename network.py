@@ -1,11 +1,9 @@
 import tensorflow as tf
 import os
-from IPython import embed
 from time import time
 
 from common import cfg
-from data_provider import *
-import model
+import model, data_provider
 
 
 
@@ -137,7 +135,7 @@ class Network(object):
                 self.step += 1
 
                 #   get train data
-                train_batch = get_train(self.args.batch_size)
+                train_batch = data_provider.get_train(self.args.batch_size)
 
                 #   get training summary, loss value, 
                 #   and parameters updating
@@ -160,7 +158,7 @@ class Network(object):
                         self.step % self.args.val_step == 0:
                     self.show_epoch(loss, 'train')
 
-                    val_batch = get_val(self.args.batch_size)
+                    val_batch = data_provider.get_val(self.args.batch_size)
                     val_summary, loss = sess.run(\
                             [self.summary, self.loss_op], \
                             feed_dict=self.feed_dict(val_batch))
